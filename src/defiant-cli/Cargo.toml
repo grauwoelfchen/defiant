@@ -14,7 +14,7 @@ edition = "2021"
 exclude = []
 
 [[bin]]
-name = "defiant-cli"
+name = "defiant"
 doc = false
 path = "src/main.rs"
 
