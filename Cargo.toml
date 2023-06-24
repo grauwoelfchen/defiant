@@ -1,0 +1,8 @@
+[workspace]
+members = [
+  "src/defiant",
+  "src/defiant-cli",
+]
+
+[profile.release]
+panic = "abort"

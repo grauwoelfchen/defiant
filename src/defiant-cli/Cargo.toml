@@ -1,0 +1,28 @@
+[package]
+version = "0.1.0"
+name = "defiant-cli"
+authors = ["Yasuhiro Яша Asaka <yasuhiro.asaka@grauwoelfchen.net>"]
+description = "A CLI of defiant"
+repository = "https://gitlab.com/grauwoelfchen/defiant"
+homepage = "https://gitlab.com/grauwoelfchen/defiant"
+documentation = "https://gitlab.com/grauwoelfchen/defiant"
+license = "GPL-3.0-or-later"
+readme = "README.md"
+categories = ["command-line-interface", "text-processing"]
+keywords = ["text"]
+edition = "2021"
+exclude = []
+
+[[bin]]
+name = "defiant-cli"
+doc = false
+path = "src/main.rs"
+
+[dependencies]
+clap = { version = "4.2", features = ["derive"] }
+defiant = { path = "../defiant" }
+
+[dev-dependencies.cargo-husky]
+version = "1"
+default-features = false
+features = ["user-hooks"]
