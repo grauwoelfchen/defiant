@@ -5,7 +5,7 @@ use defiant::get_config;
 #[command(version, about, long_about = None)]
 struct Args {
     /// Path to the config file
-    #[arg(short, long)]
+    #[arg(short, long, default_value = "")]
     config: String,
 }
 
@@ -15,5 +15,5 @@ fn main() {
     let config = get_config(&config_file);
 
     // FIXME
-    println!("{}", config.database_file);
+    println!("{}", config.database_file.unwrap());
 }
