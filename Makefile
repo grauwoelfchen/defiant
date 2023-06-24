@@ -55,9 +55,12 @@ test\:doc: # Run only doc tests
 	@cargo test --doc
 .PHONY: test\:doc
 
-test\:all: test\:doc # Run all tests
+test\:all: test\:doc # Run all tests [synonym: test]
 	@cargo test --all -- --nocapture
 .PHONY: test\:all
+
+test: test\:all
+.PHONY: test
 
 # build
 build\:debug\:lib: # Build only lib package with debug mode
