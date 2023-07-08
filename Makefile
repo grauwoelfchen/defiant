@@ -36,12 +36,16 @@ vet: vet\:all
 
 # test
 test\:unit\:lib: # Run only unit tests for lib package
-	@cargo test --lib -- --nocapture
+	@cargo test --package $(PACKAGE) --lib -- --nocapture
 .PHONY: test\:unit\:lib
 
-test\:unit\:cli: # Run only unit tests for -cli package
-	@cargo test --bin $(PACKAGE)-cli -- --nocapture
+test\:unit\:cli: # Run only unit tests for a binary in -cli package
+	@cargo test --package $(PACKAGE)-cli --bin -- --nocapture
 .PHONY: test\:unit\:lib
+
+test\:unit\:web: # Run only unit tests for binaries in -web package
+	@cargo test --package $(PACKAGE)-web --bins -- --nocapture
+.PHONY: test\:unit\:web
 
 test\:unit: # Run only unit tests for all packages
 	@cargo test --lib --bins -- --nocapture
@@ -64,20 +68,28 @@ test: test\:all
 
 # build
 build\:debug\:lib: # Build only lib package with debug mode
-	cargo build --lib
+	cargo build --package $(PACKAGE) --lib
 .PHONY: build\:debug\:lib
 
 build\:debug\:cli: # Build only -cli package with debug mode
-	cargo build --bin $(PACKAGE)-cli
+	cargo build --package $(PACKAGE)-cli --bins
 .PHONY: build\:debug\:cli
 
+build\:debug\:web: # Build only -web package with debug mode
+	cargo build --package $(PACKAGE)-web --bins
+.PHONY: build\:debug\:web
+
 build\:release\:lib: # Build only lib package with release mode
-	cargo build --lib --release
+	cargo build --package $(PACKAGE) --lib --release
 .PHONY: build\:release\:lib
 
 build\:release\:cli: # Build only -cli package with release mode
-	cargo build --bin $(PACKAGE)-cli --release
+	cargo build --package $(PACKAGE)-cli --bins --release
 .PHONY: build\:release\:cli
+
+build\:release\:web: # Build only -web package with release mode
+	cargo build --package $(PACKAGE)-web --bins --release
+.PHONY: build\:release\:web
 
 build\:debug: # Build all packages with debug mode [synonym: build]
 	cargo build --workspace
@@ -91,13 +103,17 @@ build: build\:debug
 .PHONY: build
 
 # util
-watch\:lib: # Monitor build process for lib package (require cargo-watch)
-	@cargo watch --exec 'build --lib' --delay 0.3
+watch\:lib: # Monitor build process for the lib package (require cargo-watch)
+	@cargo watch --exec 'build --package $(PACKAGE) --lib' --delay 0.3
 .PHONY: watch\:lib
 
 watch\:cli: # Monitor build process for -cli package (require cargo-watch)
-	@cargo watch --exec 'build --bin $(PACKAGE)-cli' --delay 0.3
+	@cargo watch --exec 'build --package $(PACKAGE)-cli --bins' --delay 0.3
 .PHONY: watch\:cli
+
+watch\:web: # Monitor build process for -web package (require cargo-watch)
+	@cargo watch --exec 'build --package $(PACKAGE)-web --bins' --delay 0.3
+.PHONY: watch\:web
 
 clean: # Remove cache and built artifacts
 	@cargo clean

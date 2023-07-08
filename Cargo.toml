@@ -2,6 +2,7 @@
 members = [
   "src/defiant",
   "src/defiant-cli",
+  "src/defiant-web",
 ]
 
 [profile.release]

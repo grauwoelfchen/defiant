@@ -1,0 +1,24 @@
+[package]
+version = "0.1.0"
+name = "defiant-web"
+authors = ["Yasuhiro Яша Asaka <yasuhiro.asaka@grauwoelfchen.net>"]
+description = ""
+repository = "https://gitlab.com/grauwoelfchen/defiant"
+homepage = "https://gitlab.com/grauwoelfchen/defiant"
+documentation = "https://gitlab.com/grauwoelfchen/defiant"
+license = "AGPL-3.0-or-later"
+readme = "README.md"
+categories = ["web-programming::http-server", "text-processing"]
+keywords = []
+edition = "2021"
+exclude = [
+  "test/*"
+]
+
+[[bin]]
+name = "defiant-server"
+doc = false
+path = "src/bin/server.rs"
+
+[dependencies]
+rocket = "=0.5.0-rc.3"
