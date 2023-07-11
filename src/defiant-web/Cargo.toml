@@ -12,6 +12,7 @@ categories = ["web-programming::http-server", "text-processing"]
 keywords = []
 edition = "2021"
 exclude = [
+  "elm-stuff",
   "test/*"
 ]
 
