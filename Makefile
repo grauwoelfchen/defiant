@@ -135,5 +135,5 @@ help: # Display this message
 		sort
 .PHONY: help
 
-.DEFAULT_GOAL = build\:release
+.DEFAULT_GOAL = build:release
 default: build\:release
