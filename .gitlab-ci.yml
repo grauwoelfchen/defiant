@@ -1,0 +1,113 @@
+stages:
+  - vet
+  - test
+  - build
+
+.rust-vet-tools: &rust-vet-tools
+  image: registry.gitlab.com/grauwoelfchen/portolan/rust-vet-tools:stable
+  except:
+    - tags
+
+.rust: &rust
+  image: registry.gitlab.com/grauwoelfchen/portolan/rust:stable
+
+check:
+  <<: *rust-vet-tools
+  stage: vet
+  before_script:
+    - rustc --version
+    - cargo --version
+    - mkdir -p .git/hooks
+  script:
+    - make vet:check
+
+format:
+  <<: *rust-vet-tools
+  stage: vet
+  before_script:
+    - rustc --version
+    - cargo --version
+    - cargo fmt --version
+    - mkdir -p .git/hooks
+  script:
+    - make vet:format
+
+lint:
+  <<: *rust-vet-tools
+  stage: vet
+  before_script:
+    - rustc --version
+    - cargo --version
+    - cargo clippy --version
+    - mkdir -p .git/hooks
+  script:
+    - make vet:lint
+
+test:
+  <<: *rust-vet-tools
+  stage: test
+  variables:
+    # https://clang.llvm.org/docs/SourceBasedCodeCoverage.html
+    RUSTFLAGS: "-Cinstrument-coverage"
+    LLVM_PROFILE_FILE: "${CI_PROJECT_DIR}/target/coverage/defiant-%p-%m.profraw"
+  before_script:
+    - rustc --version
+    - cargo --version
+    - grcov --version
+    - xmllint --version
+    - mkdir -p target/coverage
+  script:
+    - make test
+    # grcov <PATHS> must match with $LLVM_PROFILE_FILE
+    - |
+      grcov ./target/coverage
+        --source-dir .
+        --keep-only "src/*"
+        --binary-path ./target/debug
+        --output-path ./target/coverage
+        --output-types cobertura,html
+    # dev-libs/libxml2 contains /usr/bin/xmllint
+    - |
+      xmllint
+        --xpath "concat('Coverage: ', 100 * string(//coverage/@line-rate), '%')"
+        target/coverage/cobertura.xml
+  coverage: '/Coverage: \d+(?:\.\d+)?/'
+  artifacts:
+    paths:
+      - target/coverage/
+    reports:
+      coverage_report:
+        coverage_format: cobertura
+        path: cobertura.xml
+
+build-debug:
+  <<: *rust
+  stage: build
+  before_script:
+    - rustc --version
+    - cargo --version
+    - mkdir -p .git/hooks
+  script:
+    - make build:debug
+  cache:
+    untracked: true
+  only:
+    - merge_requests
+    - trunk
+    - tags
+
+build-release:
+  <<: *rust
+  stage: build
+  before_script:
+    - rustc --version
+    - cargo --version
+    - mkdir -p .git/hooks
+  script:
+    - make build:release
+  cache:
+    untracked: true
+  only:
+    - merge_requests
+    - trunk
+    - tags
