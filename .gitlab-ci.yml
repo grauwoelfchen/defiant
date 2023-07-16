@@ -60,7 +60,12 @@ test:
   script:
     - make test
     # grcov <PATHS> must match with $LLVM_PROFILE_FILE
-    - grcov ./target/coverage \
+    # NOTE:
+    # It seems that "--source-dir" is treated as part of <PATHS>
+    # at runtime without (|) here...
+    - |
+      grcov \
+        ./target/coverage \
         --source-dir . \
         --keep-only "src/*" \
         --binary-path ./target/debug \
