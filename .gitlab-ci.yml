@@ -60,15 +60,16 @@ test:
   script:
     - make test
     # grcov <PATHS> must match with $LLVM_PROFILE_FILE
-    - |
-      grcov ./target/coverage
+    - >
+      grcov
+        ./target/coverage
         --source-dir .
         --keep-only "src/*"
         --binary-path ./target/debug
         --output-path ./target/coverage
         --output-types cobertura,html
     # dev-libs/libxml2 contains /usr/bin/xmllint
-    - |
+    - >
       xmllint
         --xpath "concat('Coverage: ', 100 * string(//coverage/@line-rate), '%')"
         target/coverage/cobertura.xml
