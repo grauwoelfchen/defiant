@@ -55,6 +55,7 @@ test:
     - cargo --version
     - grcov --version
     - xmllint --version
+    - mkdir -p .git/hooks
     - mkdir -p target/coverage
   script:
     - make test
