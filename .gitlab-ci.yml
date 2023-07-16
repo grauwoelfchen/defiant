@@ -67,7 +67,11 @@ test:
         --output-path ./target/coverage \
         --output-types cobertura,html
     # dev-libs/libxml2 contains /usr/bin/xmllint
-    - xmllint \
+    # NOTE:
+    # It seems that the pipe indicator (|) is needed here to prevent that
+    # a colon (:) is treated as part of YAML :'(
+    - |
+      xmllint \
         --xpath \
           "concat('Coverage: ', 100 * string(//coverage/@line-rate), '%')" \
         target/coverage/cobertura.xml
