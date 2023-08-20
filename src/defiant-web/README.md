@@ -1,5 +1,44 @@
 # Defiant Web
 
+## Requirements
+
+* Rust (stable)
+* PostgreSQL
+
+## Setup
+
+```zsh
+% psql -U xxx -c "CREATE USER <USER> WITH PASSWORD \"<PASSWORD>\";"
+% psql -U xxx -c "ALTER USER <USER> WITH SUPERUSER CREATEDB LOGIN;"
+% psql -U xxx -c "CREATE DATABASE <NAME> WITH TEMPLATE = template0 ENCODING = UTF8;"
+% psql -U xxx -c "ALTER DATABASE <NAME> OWNER TO <USER>;"
+% psql <DATABASE_URL> -c "CREATE EXTENSION IF NOT EXISTS \"pg_stat_statements\";"
+% psql <DATABASE_URL> -c "CREATE EXTENSION IF NOT EXISTS \"uuid-ossp\";"
+```
+
+```zsh
+% cp .env{.sample,}
+% make setup
+% make scheme:migration:commit
+```
+
+## Build
+
+```zsh
+% make build
+```
+
+## Test
+
+```zsh
+% ENV= test make schema:migration:commit
+% make test
+
+: or run the indivisual test like so:
+% cargo test model::namespace::test -- --nocapture
+```
+
+
 ## License
 
 `AGPL-3.0-or-later`
