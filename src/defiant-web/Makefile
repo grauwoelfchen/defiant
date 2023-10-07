@@ -1,5 +1,6 @@
 DATABASE_URL := $(if $(ENV),"$$$(shell echo "$(ENV)" | \
 								tr '[:lower:]' '[:upper:]')_DATABASE_URL","$${DATABASE_URL:-}")
+MIGRATION_DIRECTORY := migration
 MIGRATION_NAME ?=
 
 ENV ?= development
@@ -30,8 +31,9 @@ schema\:migration\:create: # Generate a new migration files (require: MIGRATION_
 		echo "DATABASE_URL is not set" >&2; \
 		exit 1; \
 	fi; \
-	diesel setup; \
+	diesel setup --migration-dir $(MIGRATION_DIRECTORY); \
 	diesel migration generate \
+		--migration-dir $(MIGRATION_DIRECTORY) \
 		--version $$(date +%Y%m%d%H%M%S) \
 		$(MIGRATION_NAME)
 .PHONY: schema\:migration\:create
@@ -47,8 +49,9 @@ schema\:migration\:commit: # Run all migrations
 		echo "DATABASE_URL is not set" >&2; \
 		exit 1; \
 	fi; \
-	diesel setup; \
-	diesel migration run
+	diesel setup --migration-dir $(MIGRATION_DIRECTORY); \
+	diesel migration run \
+		--migration-dir $(MIGRATION_DIRECTORY)
 .PHONY: schema\:migration\:commit
 
 schema\:migration\:revert: # Rollback the latest migration
@@ -62,8 +65,9 @@ schema\:migration\:revert: # Rollback the latest migration
 		echo "DATABASE_URL is not set" >&2; \
 		exit 1; \
 	fi; \
-	diesel setup; \
-	diesel migration revert
+	diesel setup --migration-dir $(MIGRATION_DIRECTORY); \
+	diesel migration revert \
+		--migration-dir $(MIGRATION_DIRECTORY)
 .PHONY: schema\:migration\:revert
 
 schema\:migration\:status: # List all migrations
@@ -77,8 +81,9 @@ schema\:migration\:status: # List all migrations
 		echo "DATABASE_URL is not set" >&2; \
 		exit 1; \
 	fi; \
-	diesel setup; \
-	diesel migration list
+	diesel setup --migration-dir $(MIGRATION_DIRECTORY); \
+	diesel migration list \
+		--migration-dir $(MIGRATION_DIRECTORY)
 .PHONY: schema\:migration\:status
 
 build: # Build the application with debug mode
