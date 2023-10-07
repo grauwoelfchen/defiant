@@ -1,0 +1,251 @@
+/**
+ * ## Links
+ *
+ * - [Color Names | Graphviz](https://graphviz.org/doc/info/colors.html)
+ * - [Arrows Shapes | Graphviz](https://graphviz.org/doc/info/arrows.html)
+ *
+ * ## How to make
+ *
+ * ```zsh
+ * % dot -T png er.dot > er.png; feh er.png
+ * ```
+ */
+digraph ER {
+  graph [fontname = "DejaVuSansMono"; fontsize = 9];
+  node  [fontname = "DejaVuSansMono"; fontsize = 9];
+  edge  [fontname = "DejaVuSansMono"; fontsize = 9];
+
+  /* node */
+
+  node [ // object
+    shape   = record
+    rankdir = LR
+  ]
+
+  _Legend [
+    label = <<table border="0" cellspacing="0" cellpadding="3">
+      <tr>
+        <td border="1" align="center" bgcolor="gray100"><b>HEADER COLOR</b></td>
+        <td border="1" align="center" bgcolor="gray100"><b>DELETION</b></td>
+      </tr>
+      <tr>
+        <td border="1" align="center" bgcolor="whitesmoke">whitesmoke</td>
+        <td border="1" align="left" bgcolor="white"></td>
+      </tr>
+      <tr>
+        <td border="1" align="center" bgcolor="mistyrose2">mistyrose2</td>
+        <td border="1" align="left" bgcolor="white">soft (logical)</td>
+      </tr>
+      <tr>
+        <td border="1" align="center" bgcolor="lightcyan2">lightcyan2</td>
+        <td border="1" align="left" bgcolor="white">soft (logical) + nullify</td>
+      </tr>
+      <tr>
+        <td border="1" align="center" bgcolor="snow3">snow3</td>
+        <td border="1" align="left" bgcolor="white">hard (physical)</td>
+      </tr>
+    </table>>
+    shape     = "none"
+    style     = "filled"
+    margin    = "0.07,0.07"
+    fontcolor = "black"
+    fillcolor = "gainsboro"
+  ]
+
+  User [
+    label = <<table border="0" cellspacing="0" cellpadding="3">
+      <tr><td border="1" colspan="4" align="center" bgcolor="lightcyan2">users</td></tr>
+      <tr>
+        <td border="1" colspan="4" align="left">
+«User»<br align="left"/>
+has_many: bookmarks<br align="left"/>
+        </td>
+      </tr>
+      <tr>
+        <td border="1" align="center"><b>COLUMN</b></td>
+        <td border="1" align="center"><b>TYPE</b></td>
+        <td border="1" align="center"><b>NULLABLE</b></td>
+        <td border="1" align="center"></td>
+      </tr>
+      <tr>
+        <td border="1" align="left">id</td>
+        <td border="1" align="left">bigint</td>
+        <td border="1" align="left">not null</td>
+        <td border="1" align="left"></td>
+      </tr>
+      <tr>
+        <td border="1" align="left">created_at</td>
+        <td border="1" align="left">timestamp without time zone</td>
+        <td border="1" align="left">not null</td>
+        <td border="1" align="left">now() at time zone 'utc'</td>
+      </tr>
+      <tr>
+        <td border="1" align="left">updated_at</td>
+        <td border="1" align="left">timestamp without time zone</td>
+        <td border="1" align="left">not null</td>
+        <td border="1" align="left">now() at time zone 'utc'</td>
+      </tr>
+    </table>>
+    shape     = "none"
+    style     = ""
+    margin    = "0"
+    fontcolor = "black"
+    fillcolor = ""
+  ]
+
+  Bookmark [
+    label = <<table border="0" cellspacing="0" cellpadding="3">
+      <tr><td border="1" colspan="4" align="center" bgcolor="snow3">bookmarks</td></tr>
+      <tr>
+        <td border="1" colspan="4" align="left">
+<b>«</b>Bookmark<b>»</b><br align="left"/>
+belongs_to: users<br align="left"/>
+        </td>
+      </tr>
+      <tr>
+        <td border="1" align="center"><b>COLUMN</b></td>
+        <td border="1" align="center"><b>TYPE</b></td>
+        <td border="1" align="center"><b>NULLABLE</b></td>
+        <td border="1" align="center"></td>
+      </tr>
+      <tr>
+        <td border="1" align="left">id</td>
+        <td border="1" align="left">bigint</td>
+        <td border="1" align="left">not null</td>
+        <td border="1" align="left">nextval('bookmarks_id_seq')</td>
+      </tr>
+      <tr>
+        <td border="1" align="left">user_id</td>
+        <td border="1" align="left">bigint</td>
+        <td border="1" align="left"></td>
+        <td border="1" align="left"></td>
+      </tr>
+      <tr>
+        <td border="1" align="left">uuid</td>
+        <td border="1" align="left">uuid</td>
+        <td border="1" align="left">not null</td>
+        <td border="1" align="left"></td>
+      </tr>
+      <tr>
+        <td border="1" align="left">url</td>
+        <td border="1" align="left">character varying(2048)</td>
+        <td border="1" align="left">not null</td>
+        <td border="1" align="left"></td>
+      </tr>
+      <tr>
+        <td border="1" align="left">title</td>
+        <td border="1" align="left">character varying(256)</td>
+        <td border="1" align="left"></td>
+        <td border="1" align="left"></td>
+      </tr>
+      <tr>
+        <td border="1" align="left">description</td>
+        <td border="1" align="left">text</td>
+        <td border="1" align="left"></td>
+        <td border="1" align="left"></td>
+      </tr>
+      <tr>
+        <td border="1" align="left">created_at</td>
+        <td border="1" align="left">timestamp without time zone</td>
+        <td border="1" align="left">not null</td>
+        <td border="1" align="left">now() at time zone 'utc'</td>
+      </tr>
+      <tr>
+        <td border="1" align="left">updated_at</td>
+        <td border="1" align="left">timestamp without time zone</td>
+        <td border="1" align="left">not null</td>
+        <td border="1" align="left">now() at time zone 'utc'</td>
+      </tr>
+    </table>>
+    shape     = "none"
+    style     = ""
+    margin    = "0"
+    fontcolor = "black"
+    fillcolor = ""
+  ]
+
+  edge [ // relation
+    shape   = record
+    rankdir = LR
+  ]
+
+  /* layout */
+
+  // NOTE:
+  //
+  // zero or many: crowodot
+  // one or many:  crowtee
+  // many:         crow
+  // one:          teetee
+  // zero or one:  teeodot
+
+  edge [ // belongs_to -> has_many (zero or many)
+    arrowhead = teetee
+    arrowtail = crowodot
+    headlabel = "1"
+    taillabel = "0..n"
+    dir       = both
+  ]
+
+  Bookmark -> User
+
+  edge [ // belongs_to -> has_many (one or many)
+    arrowhead = teetee
+    arrowtail = crowtee
+    headlabel = "1"
+    taillabel = "1..n"
+    dir       = both
+  ]
+
+  edge [ // belongs_to -> has_one
+    arrowhead = teetee
+    arrowtail = none
+    headlabel = "1"
+    taillabel = "1"
+    dir       = both
+  ]
+
+  edge [ // has_many (zero or many) <-> has_many (zero or many)
+    arrowhead = crowodot
+    arrowtail = crowodot
+    headlabel = "0..n"
+    taillabel = "0..n"
+    dir       = both
+  ]
+
+  edge [ // has_many (many)
+    arrowhead = crow
+    arrowtail = none
+    headlabel = ""
+    taillabel = ""
+    dir       = both
+  ]
+
+  edge [ // belongs_to
+    arrowhead = none
+    arrowtail = none
+    headlabel = ""
+    taillabel = ""
+    dir       = both
+  ]
+
+  edge [ // has_one (one)
+    arrowhead = teetee
+    arrowtail = none
+    headlabel = ""
+    taillabel = ""
+    dir       = both
+  ]
+
+  edge [ // has_one (zero or one)
+    arrowhead = teeodot
+    arrowtail = none
+    headlabel = ""
+    taillabel = ""
+    dir       = both
+  ]
+
+  {rank = same; _Legend};
+  {rank = same; User};
+  {rank = same; Bookmark};
+}
