@@ -1,0 +1,19 @@
+BEGIN;
+
+CREATE SEQUENCE users_id_seq
+  START WITH 1
+  INCREMENT BY 1
+  NO MAXVALUE
+  NO MINVALUE
+  CACHE 1
+;
+
+CREATE TABLE users (
+  id BIGINT NOT NULL PRIMARY KEY DEFAULT nextval('users_id_seq')
+, created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL
+    DEFAULT (now() AT TIME ZONE 'utc')
+, updated_at TIMESTAMP WITHOUT TIME ZONE NOT NULL
+    DEFAULT (now() AT TIME ZONE 'utc')
+);
+
+ALTER SEQUENCE users_id_seq OWNED BY users.id;
