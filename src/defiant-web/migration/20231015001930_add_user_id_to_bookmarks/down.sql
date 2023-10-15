@@ -1,5 +1,3 @@
-BEGIN;
-
 DROP INDEX IF EXISTS bookmarks_user_id_idx;
 
 ALTER TABLE bookmarks DROP CONSTRAINT IF EXISTS bookmarks_user_id_fkey RESTRICT;

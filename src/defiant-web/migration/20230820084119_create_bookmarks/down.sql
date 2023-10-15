@@ -1,5 +1,3 @@
-BEGIN;
-
 DROP INDEX IF EXISTS bookmarks_uuid_idx;
 
 DROP TABLE IF EXISTS bookmarks;

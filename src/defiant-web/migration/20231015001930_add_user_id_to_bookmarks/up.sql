@@ -1,5 +1,3 @@
-BEGIN;
-
 ALTER TABLE bookmarks
   -- bookmarks_user_id_fkey
   ADD COLUMN user_id BIGINT REFERENCES users (id) MATCH FULL NOT NULL
