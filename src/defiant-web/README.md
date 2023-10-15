@@ -28,6 +28,18 @@
 % make build
 ```
 
+## Run
+
+```zsh
+% path/to/target/debug/defint-server
+🔧 Configured for debug.
+   >> address: 127.0.0.1
+   >> port: 8000
+...
+% curl -v http://127.0.0.1:8000/health 2>&1 | grep '< HTTP'
+< HTTP/1.1 204 No Content
+```
+
 ## Test
 
 ```zsh
