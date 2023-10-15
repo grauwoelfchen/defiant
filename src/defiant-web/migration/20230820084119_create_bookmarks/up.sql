@@ -1,3 +1,5 @@
+BEGIN;
+
 CREATE SEQUENCE bookmarks_id_seq
   START WITH 1
   INCREMENT BY 1
@@ -7,14 +9,14 @@ CREATE SEQUENCE bookmarks_id_seq
 ;
 
 CREATE TABLE bookmarks (
-  id BIGINT NOT NULL PRIMARY KEY DEFAULT nextval('bookmarks_id_seq'),
-  uuid UUID NOT NULL DEFAULT uuid_generate_v4(),
-  url CHARACTER VARYING(2048) NOT NULL,
-  title CHARACTER VARYING(256) NULL,
-  description TEXT NULL,
-  created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL
-    DEFAULT (now() AT TIME ZONE 'utc'),
-  updated_at TIMESTAMP WITHOUT TIME ZONE NOT NULL
+  id BIGINT NOT NULL PRIMARY KEY DEFAULT nextval('bookmarks_id_seq')
+, uuid UUID NOT NULL DEFAULT uuid_generate_v4()
+, url CHARACTER VARYING(2048) NOT NULL
+, title CHARACTER VARYING(256) NULL
+, description TEXT NULL
+, created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL
+    DEFAULT (now() AT TIME ZONE 'utc')
+, updated_at TIMESTAMP WITHOUT TIME ZONE NOT NULL
     DEFAULT (now() AT TIME ZONE 'utc')
 );
 
